@@ -32,4 +32,15 @@ public class CommandInterpreter {
         return inputLine;
     }
 
+    public static ArrayList<String> lineSplitter(String text) {
+        ArrayList<String> splitText = new ArrayList<>();
+        String regex = "\"(?:[^\"\\\\]|\\\\.)*\"|\\S+\n";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(text);
+        while (matcher.find()) {
+            splitText.add(matcher.group());
+        }
+        return splitText;
+    }
+
 }
