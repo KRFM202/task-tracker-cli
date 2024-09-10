@@ -15,13 +15,13 @@ public class CommandInterpreter {
 
     public static void main(String[] args) {
         commands.put("add", CommandExecutor::add);
-        ArrayList<String> splitLine = lineSplitter(ConsoleReader());
+        ArrayList<String> splitLine = lineSplitter(consoleReader());
         String command = splitLine.remove(0);
         splitLine.forEach(System.out::println);
     }
 
 
-    public static String ConsoleReader() {
+    public static String consoleReader() {
         BufferedReader inputBuffer = new BufferedReader(new InputStreamReader(System.in));
         String inputLine = "";
         try {
