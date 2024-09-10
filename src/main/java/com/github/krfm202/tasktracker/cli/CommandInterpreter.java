@@ -17,4 +17,19 @@ public class CommandInterpreter {
 
 
     }
+
+    public static String ConsoleReader() {
+        BufferedReader inputBuffer = new BufferedReader(new InputStreamReader(System.in));
+        String inputLine = "";
+        try {
+            System.out.println("Escribir:");
+            inputLine = inputBuffer.readLine();
+            //System.out.println(inputLine);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return inputLine;
+    }
+
 }
