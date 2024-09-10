@@ -14,9 +14,12 @@ public class CommandInterpreter {
     private static final Map<String, Consumer<String[]>> commands = new HashMap<>();
 
     public static void main(String[] args) {
-
-
+        commands.put("add", CommandExecutor::add);
+        ArrayList<String> splitLine = lineSplitter(ConsoleReader());
+        String command = splitLine.remove(0);
+        splitLine.forEach(System.out::println);
     }
+
 
     public static String ConsoleReader() {
         BufferedReader inputBuffer = new BufferedReader(new InputStreamReader(System.in));
@@ -28,18 +31,18 @@ public class CommandInterpreter {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
         return inputLine;
     }
 
     public static ArrayList<String> lineSplitter(String text) {
         ArrayList<String> splitText = new ArrayList<>();
-        String regex = "\"(?:[^\"\\\\]|\\\\.)*\"|\\S+\n";
+        String regex = "\\b\\w+\\b|\"(?:\\\\.|[^\"\\\\])*";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
             splitText.add(matcher.group());
         }
+        //splitText.forEach(System.out::println);
         return splitText;
     }
 
