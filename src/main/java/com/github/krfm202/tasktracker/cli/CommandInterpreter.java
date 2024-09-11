@@ -4,22 +4,24 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CommandInterpreter {
-    private static final Map<String, Consumer<String[]>> commands = new HashMap<>();
-
     public static void main(String[] args) {
-        commands.put("add", CommandExecutor::add);
-        ArrayList<String> splitLine = lineSplitter(consoleReader());
-        String command = splitLine.remove(0);
-        splitLine.forEach(System.out::println);
+        while (true) {
+            ArrayList<String> splitLine = lineSplitter(consoleReader());
+            String command = splitLine.remove(0);
+            CommandExecutor.setArgs(splitLine);
+            var isAccepted = false;
+            switch (command) {
+                case "add" -> isAccepted = CommandExecutor.add();
+                case "delete" -> isAccepted = CommandExecutor.delete();
+                case "list" -> isAccepted = CommandExecutor.listAll();
+                case "exit" -> isAccepted = CommandExecutor.exit();
+            }
+        }
     }
-
 
     public static String consoleReader() {
         BufferedReader inputBuffer = new BufferedReader(new InputStreamReader(System.in));
@@ -27,7 +29,6 @@ public class CommandInterpreter {
         try {
             System.out.println("Escribir:");
             inputLine = inputBuffer.readLine();
-            //System.out.println(inputLine);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -36,14 +37,14 @@ public class CommandInterpreter {
 
     public static ArrayList<String> lineSplitter(String text) {
         ArrayList<String> splitText = new ArrayList<>();
-        String regex = "\\b\\w+\\b|\"(?:\\\\.|[^\"\\\\])*";
+        String regex = "\\b\\w+\\b|\"(?:[^\"\\\\]|\\\\.)*\"";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
             splitText.add(matcher.group());
         }
-        //splitText.forEach(System.out::println);
+        System.out.println("text partido:");
+        System.out.println(splitText);
         return splitText;
     }
-
 }

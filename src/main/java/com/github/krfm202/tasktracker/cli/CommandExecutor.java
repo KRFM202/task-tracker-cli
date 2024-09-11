@@ -1,22 +1,33 @@
 package com.github.krfm202.tasktracker.cli;
 
+import java.util.ArrayList;
+
 public class CommandExecutor {
 
-    public static boolean add(String[] args){
+    private static ArrayList<String> args;
+
+    public static void setArgs(ArrayList<String> args) {
+        CommandExecutor.args = args;
+    }
+
+    public static boolean add() {
+        System.out.println(args);
+        System.out.println("comando ejecutado add");
         return false;
     }
 
-    private boolean delete(String[] args){
-        return false;
-    }
-    private boolean list(String[] args){
-        return false;
-    }
-    private boolean exit(String[] args){
+    public static boolean delete() {
+        System.out.println(args);
+        System.out.println("comando ejecutado delete");
         return false;
     }
 
+    public static boolean listAll() {
+        return false;
+    }
 
-
-
+    public static boolean exit() {
+        System.exit(0);
+        return false;
+    }
 }
