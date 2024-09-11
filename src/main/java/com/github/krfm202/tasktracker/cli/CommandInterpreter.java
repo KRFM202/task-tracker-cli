@@ -13,18 +13,20 @@ public class CommandInterpreter {
             ArrayList<String> splitLine = lineSplitter(consoleReader());
             String command = splitLine.remove(0);
             CommandExecutor.setArgs(splitLine);
-            var isAccepted = false;
-            switch (command) {
-                case "add" -> isAccepted = CommandExecutor.add();
-                case "delete" -> isAccepted = CommandExecutor.delete();
-                case "list" -> isAccepted = CommandExecutor.listAll();
-                case "exit" -> isAccepted = CommandExecutor.exit();
-            }
-            if (!isAccepted) {
-                RuntimeException ex = new RuntimeException("Command cannot processed, try again");
-                System.out.println(ex.getMessage());
-            }
+            boolean isAccepted = commandMatcher(command);
+            validateCommand(isAccepted);
         }
+    }
+
+    public static boolean commandMatcher(String command) {
+        var isAccepted = false;
+        switch (command) {
+            case "add" -> isAccepted = CommandExecutor.add();
+            case "delete" -> isAccepted = CommandExecutor.delete();
+            case "list" -> isAccepted = CommandExecutor.listAll();
+            case "exit" -> isAccepted = CommandExecutor.exit();
+        }
+        return isAccepted;
     }
 
     public static String consoleReader() {
@@ -50,5 +52,12 @@ public class CommandInterpreter {
         System.out.println("text partido:");
         System.out.println(splitText);
         return splitText;
+    }
+
+    public static void validateCommand(boolean isAccepted) {
+        if (!isAccepted) {
+            RuntimeException ex = new RuntimeException("Command cannot processed, try again");
+            System.out.println(ex.getMessage());
+        }
     }
 }
