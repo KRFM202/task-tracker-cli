@@ -20,6 +20,10 @@ public class CommandInterpreter {
                 case "list" -> isAccepted = CommandExecutor.listAll();
                 case "exit" -> isAccepted = CommandExecutor.exit();
             }
+            if (!isAccepted) {
+                RuntimeException ex = new RuntimeException("Command cannot processed, try again");
+                System.out.println(ex.getMessage());
+            }
         }
     }
 
