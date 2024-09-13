@@ -4,7 +4,7 @@ import java.util.List;
 
 public class CommandProcessor {
 
-    private List<String> args;
+    private final List<String> args;
 
     CommandProcessor(List<String> args) {
         this.args = args;
