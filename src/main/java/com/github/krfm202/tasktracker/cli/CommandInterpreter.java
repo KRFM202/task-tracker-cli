@@ -1,47 +1,55 @@
 package com.github.krfm202.tasktracker.cli;
 
+import com.github.krfm202.tasktracker.exceptions.CommandException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CommandInterpreter {
     public static void main(String[] args) {
-        while (true) {
-            ArrayList<String> splitLine = lineSplitter(consoleReader());
-            String command = splitLine.remove(0);
-            CommandExecutor.setArgs(splitLine);
-            boolean isAccepted = commandMatcher(command);
-            validateCommand(isAccepted);
+        try {
+            while (true) {
+                List<String> lines = splitLine(readConsole());
+                if (lines.isEmpty()) continue;
+                String command = lines.remove(0);
+                CommandProcessor executor = new CommandProcessor(lines);
+                findMatchingCommand(command, executor);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 
-    public static boolean commandMatcher(String command) {
-        var isAccepted = false;
+    public static void findMatchingCommand(String command, CommandProcessor processor) {
         switch (command) {
-            case "add" -> isAccepted = CommandExecutor.add();
-            case "delete" -> isAccepted = CommandExecutor.delete();
-            case "list" -> isAccepted = CommandExecutor.listAll();
-            case "exit" -> isAccepted = CommandExecutor.exit();
+            case "add" -> processor.processAdd();
+            case "delete" -> processor.processDelete();
+            case "list" -> processor.processListAll();
+            case "exit" -> processor.processExit();
+            default -> {
+                throw new CommandException("Unknown command: " + command);
+            }
         }
-        return isAccepted;
     }
 
-    public static String consoleReader() {
+    public static String readConsole() {
         BufferedReader inputBuffer = new BufferedReader(new InputStreamReader(System.in));
         String inputLine = "";
         try {
             System.out.println("Escribir:");
             inputLine = inputBuffer.readLine();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Error reading input: " + e.getMessage());
         }
         return inputLine;
     }
 
-    public static ArrayList<String> lineSplitter(String text) {
+    public static ArrayList<String> splitLine(String text) {
         ArrayList<String> splitText = new ArrayList<>();
         String regex = "\\b\\w+\\b|\"(?:[^\"\\\\]|\\\\.)*\"";
         Pattern pattern = Pattern.compile(regex);
@@ -49,15 +57,6 @@ public class CommandInterpreter {
         while (matcher.find()) {
             splitText.add(matcher.group());
         }
-        System.out.println("text partido:");
-        System.out.println(splitText);
         return splitText;
-    }
-
-    public static void validateCommand(boolean isAccepted) {
-        if (!isAccepted) {
-            RuntimeException ex = new RuntimeException("Command cannot processed, try again");
-            System.out.println(ex.getMessage());
-        }
     }
 }
