@@ -1,6 +1,7 @@
 package com.github.krfm202.tasktracker.model;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Task {
     private int id;
@@ -48,5 +49,16 @@ public class Task {
         this.updatedAt = updatedAt;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return id == task.id;
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
 }
