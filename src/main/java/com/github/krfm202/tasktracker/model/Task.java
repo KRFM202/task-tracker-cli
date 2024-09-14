@@ -6,7 +6,7 @@ import java.util.Objects;
 public class Task {
     private int id;
     private String description;
-    private TaskStatus status;
+    private Status status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private static int idAccumulator = 1;
@@ -29,11 +29,11 @@ public class Task {
         this.description = description;
     }
 
-    public TaskStatus getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(TaskStatus status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
