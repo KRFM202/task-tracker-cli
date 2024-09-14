@@ -5,13 +5,14 @@ import com.github.krfm202.tasktracker.exceptions.CommandException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CommandInterpreter {
-    public static void main(String[] args) {
+    public static void run() {
         try {
             while (true) {
                 List<String> lines = splitLine(readConsole());
@@ -38,7 +39,7 @@ public class CommandInterpreter {
     }
 
     public static String readConsole() {
-        BufferedReader inputBuffer = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader inputBuffer = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
         String inputLine = "";
         try {
             System.out.println("Escribir:");
