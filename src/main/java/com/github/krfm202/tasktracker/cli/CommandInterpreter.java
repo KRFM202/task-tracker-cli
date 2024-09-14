@@ -12,7 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CommandInterpreter {
-    public static void run() {
+    public void run() {
         try {
             while (true) {
                 List<String> lines = splitLine(readConsole());
@@ -26,7 +26,7 @@ public class CommandInterpreter {
         }
     }
 
-    public static void findMatchingCommand(String command, CommandProcessor processor) {
+    public void findMatchingCommand(String command, CommandProcessor processor) {
         switch (command) {
             case "add" -> processor.processAdd();
             case "delete" -> processor.processDelete();
@@ -38,7 +38,7 @@ public class CommandInterpreter {
         }
     }
 
-    public static String readConsole() {
+    public String readConsole() {
         BufferedReader inputBuffer = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
         String inputLine = "";
         try {
@@ -50,7 +50,7 @@ public class CommandInterpreter {
         return inputLine;
     }
 
-    public static ArrayList<String> splitLine(String text) {
+    public ArrayList<String> splitLine(String text) {
         ArrayList<String> splitText = new ArrayList<>();
         String regex = "\\b\\w+\\b|\"(?:[^\"\\\\]|\\\\.)*\"";
         Pattern pattern = Pattern.compile(regex);
