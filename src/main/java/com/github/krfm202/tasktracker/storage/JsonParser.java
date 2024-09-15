@@ -28,16 +28,19 @@ public class JsonParser {
         JSONArray jArray = new JSONArray(jsonString);
         for (int i = 0; i < jArray.length(); i++) {
             JSONObject jObject = jArray.getJSONObject(i);
-            Task task = new Task(
-                    jObject.getString(keys[0]),
-                    jObject.getString(keys[1]),
-                    Status.valueOf(jObject.getString(keys[2])),
-                    LocalDateTime.parse(jObject.getString(keys[3])),
-                    LocalDateTime.parse(jObject.getString(keys[4]))
-            );
-            taskList.add(task);
+            taskList.add(convertToTask(jObject));
         }
         return taskList;
+    }
+
+    private Task convertToTask(JSONObject jObject) {
+        return new Task(
+                jObject.getString(keys[0]),
+                jObject.getString(keys[1]),
+                Status.valueOf(jObject.getString(keys[2])),
+                LocalDateTime.parse(jObject.getString(keys[3])),
+                LocalDateTime.parse(jObject.getString(keys[4]))
+        );
     }
 
     private JSONObject convertToJsonObject(Task task) {
