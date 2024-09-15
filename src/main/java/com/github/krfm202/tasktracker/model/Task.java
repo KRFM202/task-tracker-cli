@@ -11,10 +11,18 @@ public class Task {
     private final LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Task() {
+    public Task(String description, Status status) {
         this.id = UUID.randomUUID().toString();
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
+    }
+
+    public Task(String id, String description, Status status, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id;
+        this.description = description;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public String getId() {
