@@ -13,6 +13,8 @@ public class Task {
 
     public Task(String description, Status status) {
         this.id = UUID.randomUUID().toString();
+        this.description = description;
+        this.status = status;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
@@ -55,18 +57,5 @@ public class Task {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Task task = (Task) o;
-        return Objects.equals(id, task.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
     }
 }
