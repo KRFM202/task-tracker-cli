@@ -42,7 +42,7 @@ public class CommandInterpreter {
         BufferedReader inputBuffer = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
         String inputLine = "";
         try {
-            System.out.println("task-tracker->");
+            System.out.print("task-tracker-> ");
             inputLine = inputBuffer.readLine();
         } catch (IOException e) {
             System.out.println("Error reading input: " + e.getMessage());
