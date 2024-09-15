@@ -13,16 +13,16 @@ import java.util.regex.Pattern;
 
 public class CommandInterpreter {
     public void run() {
-        try {
-            while (true) {
+        while (true) {
+            try {
                 List<String> lines = splitLine(readConsole());
                 if (lines.isEmpty()) continue;
                 String command = lines.remove(0);
                 CommandProcessor executor = new CommandProcessor(lines);
                 findMatchingCommand(command, executor);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
         }
     }
 
