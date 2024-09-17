@@ -33,7 +33,7 @@ public class TaskManager {
             file.write(parser.generateJsonString(taskList));
         } else {
             System.out.println(args);
-            throw new CommandException("Insufficient Args, try again");
+            throw new CommandException("Insufficient args, try again");
         }
         return task.getId();
     }

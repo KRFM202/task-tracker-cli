@@ -3,8 +3,6 @@ package com.github.krfm202.tasktracker.model;
 import com.github.krfm202.tasktracker.storage.PersistentCounter;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
-import java.util.UUID;
 
 public class Task {
     private final int id;
