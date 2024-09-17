@@ -18,17 +18,17 @@ public class CommandInterpreter {
                 List<String> lines = splitLine(readConsole());
                 if (lines.isEmpty()) continue;
                 String command = lines.remove(0);
-                CommandProcessor executor = new CommandProcessor(lines);
-                findMatchingCommand(command, executor);
+                CommandProcessor executor = new CommandProcessor();
+                findMatchingCommand(command, executor, lines);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
         }
     }
 
-    public void findMatchingCommand(String command, CommandProcessor processor) {
+    public void findMatchingCommand(String command, CommandProcessor processor, List<String> args) {
         switch (command) {
-            case "add" -> processor.processAdd();
+            case "add" -> processor.processAdd(args);
             case "delete" -> processor.processDelete();
             case "list" -> processor.processListAll();
             case "exit" -> processor.processExit();

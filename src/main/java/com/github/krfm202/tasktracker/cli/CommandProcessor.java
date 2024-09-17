@@ -1,22 +1,23 @@
 package com.github.krfm202.tasktracker.cli;
 
+import com.github.krfm202.tasktracker.manager.TaskManager;
+
 import java.util.List;
 
 public class CommandProcessor {
+    private static TaskManager taskManager;
 
-    private final List<String> args;
-
-    CommandProcessor(List<String> args) {
-        this.args = args;
+    CommandProcessor() {
+        taskManager = new TaskManager();
     }
 
-    public void processAdd() {
-        System.out.println(args);
-        System.out.println("comando ejecutado add");
+    public void processAdd(List<String> args) {
+        taskManager.add(args);
+        System.out.println("Task added successfully");
     }
 
     public void processDelete() {
-        System.out.println(args);
+        System.out.println();
         System.out.println("comando ejecutado delete");
     }
 
