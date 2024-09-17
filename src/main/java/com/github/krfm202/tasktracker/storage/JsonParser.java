@@ -25,10 +25,12 @@ public class JsonParser {
 
     public List<Task> parseJsonStringToList(String jsonString) {
         List<Task> taskList = new ArrayList<>();
-        JSONArray jArray = new JSONArray(jsonString);
-        for (int i = 0; i < jArray.length(); i++) {
-            JSONObject jObject = jArray.getJSONObject(i);
-            taskList.add(convertToTask(jObject));
+        if (!jsonString.isEmpty()) {
+            JSONArray jArray = new JSONArray(jsonString);
+            for (int i = 0; i < jArray.length(); i++) {
+                JSONObject jObject = jArray.getJSONObject(i);
+                taskList.add(convertToTask(jObject));
+            }
         }
         return taskList;
     }
