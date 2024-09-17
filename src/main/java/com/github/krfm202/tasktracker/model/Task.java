@@ -1,25 +1,31 @@
 package com.github.krfm202.tasktracker.model;
 
+import com.github.krfm202.tasktracker.storage.PersistentCounter;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
 public class Task {
-    private final String id;
+    private final int id;
     private String description;
     private Status status;
     private final LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private PersistentCounter counter;
 
     public Task(String description, Status status) {
-        this.id = UUID.randomUUID().toString();
+        counter = PersistentCounter.loadState();
+        counter.increment();
+        this.id = counter.getCounter();
         this.description = description;
         this.status = status;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
+        counter.saveState();
     }
 
-    public Task(String id, String description, Status status, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Task(int id, String description, Status status, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.description = description;
         this.status = status;
@@ -27,7 +33,7 @@ public class Task {
         this.updatedAt = updatedAt;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 

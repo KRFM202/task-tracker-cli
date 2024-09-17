@@ -12,8 +12,8 @@ public class CommandProcessor {
     }
 
     public void processAdd(List<String> args) {
-        taskManager.add(args);
-        System.out.println("Task added successfully");
+        int id = taskManager.add(args);
+        System.out.println("Task added successfully (ID: " + id + ")");
     }
 
     public void processDelete() {

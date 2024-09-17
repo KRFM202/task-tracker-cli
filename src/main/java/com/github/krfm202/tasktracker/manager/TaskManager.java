@@ -19,14 +19,15 @@ public class TaskManager {
         parser = new JsonParser();
     }
 
-    public void add(List<String> args) {
+    public int add(List<String> args) {
         String description;
         Status status;
+        Task task;
         if (!args.isEmpty() && args.size() <= 2) {
             description = cleanDescription(args.get(0));
             if (args.size() == 1) status = Status.TODO;
             else status = findMatchingStatus(args.get(1));
-            Task task = new Task(description, status);
+            task = new Task(description, status);
             taskList = parser.parseJsonStringToList(file.read());
             taskList.add(task);
             file.write(parser.generateJsonString(taskList));
@@ -34,6 +35,7 @@ public class TaskManager {
             System.out.println(args);
             throw new CommandException("Insufficient Args, try again");
         }
+        return task.getId();
     }
 
     private Status findMatchingStatus(String sts) {

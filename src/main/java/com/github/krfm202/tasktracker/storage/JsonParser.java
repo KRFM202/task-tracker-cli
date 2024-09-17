@@ -37,7 +37,7 @@ public class JsonParser {
 
     private Task convertToTask(JSONObject jObject) {
         return new Task(
-                jObject.getString(keys[0]),
+                Integer.parseInt(jObject.getString(keys[0])),
                 jObject.getString(keys[1]),
                 Status.valueOf(jObject.getString(keys[2])),
                 LocalDateTime.parse(jObject.getString(keys[3])),
@@ -47,7 +47,7 @@ public class JsonParser {
 
     private JSONObject convertToJsonObject(Task task) {
         JSONObject jObject = new JSONObject();
-        jObject.put(keys[0], task.getId());
+        jObject.put(keys[0], String.valueOf(task.getId()));
         jObject.put(keys[1], task.getDescription());
         jObject.put(keys[2], task.getStatus());
         jObject.put(keys[3], task.getCreatedAt());

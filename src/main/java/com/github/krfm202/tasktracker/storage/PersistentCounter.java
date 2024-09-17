@@ -24,10 +24,14 @@ public class PersistentCounter implements Serializable {
         }
     }
 
-    public static PersistentCounter loadState() throws IOException {
+    public static PersistentCounter loadState() {
         File file = new File(PATH);
-        if (file.createNewFile()) {
-            return new PersistentCounter();
+        try {
+            if (file.createNewFile()) {
+                return new PersistentCounter();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Error: " + e);
         }
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(PATH))) {
             return (PersistentCounter) in.readObject();
