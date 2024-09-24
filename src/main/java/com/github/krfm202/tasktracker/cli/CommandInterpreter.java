@@ -30,6 +30,7 @@ public class CommandInterpreter {
         switch (command) {
             case "add" -> processor.processAdd(args);
             case "delete" -> processor.processDelete(args);
+            case "update" -> processor.processUpdate(args);
             case "mark" -> processor.processMark(args);
             case "list" -> processor.processList(args);
             case "exit" -> processor.processExit();

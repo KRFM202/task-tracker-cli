@@ -64,8 +64,7 @@ public class TaskManager {
 
     public boolean mark(List<String> args) {
         List<Task> taskList = parser.parseJsonStringToList(file.read());
-        boolean markedOnList = taskList
-                .stream()
+        boolean markedOnList = taskList.stream()
                 .filter(t -> Integer.parseInt(args.get(1)) == t.getId())
                 .findFirst()
                 .map(t -> {
@@ -78,6 +77,20 @@ public class TaskManager {
             return true;
         }
         return false;
+    }
+
+    public int update(List<String> args) {
+        List<Task> taskList = parser.parseJsonStringToList(file.read());
+        int id = taskList.stream()
+                .filter(t -> Integer.parseInt(args.get(0)) == t.getId())
+                .findFirst()
+                .map(t -> {
+                    t.setDescription(args.get(1));
+                    if (args.size() >= 3) t.setStatus(findMatchingStatus(args.get(2)));
+                    return t.getId();
+                }).orElse(-1);
+        if (id != -1) file.write(parser.generateJsonString(taskList));
+        return id;
     }
 
     private final Function<Task, String> mapFormat = t ->

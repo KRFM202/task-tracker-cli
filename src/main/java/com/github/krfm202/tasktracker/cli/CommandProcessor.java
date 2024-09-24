@@ -27,6 +27,12 @@ public class CommandProcessor {
         else System.out.println("Task status was not changed");
     }
 
+    public void processUpdate(List<String> args) {
+        int id = taskManager.update(args);
+        if (id != -1) System.out.println("Task successfully modified (ID: " + id + ")");
+        else System.out.println("Task failed to update, try again");
+    }
+
     public void processList(List<String> args) {
         List<String> taskList;
         if (args.isEmpty()) taskList = taskManager.list();
