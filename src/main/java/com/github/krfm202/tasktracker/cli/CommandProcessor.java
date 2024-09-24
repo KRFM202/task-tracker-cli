@@ -21,7 +21,13 @@ public class CommandProcessor {
         System.out.println("comando ejecutado delete");
     }
 
-    public void processListAll() {
+    public void processList(List<String> args) {
+        List<String> taskList;
+        if (args.isEmpty()) taskList = taskManager.list();
+        else taskList = taskManager.list(args);
+
+        System.out.println("Listing tasks:");
+        taskList.forEach(System.out::println);
     }
 
     public void processExit() {
