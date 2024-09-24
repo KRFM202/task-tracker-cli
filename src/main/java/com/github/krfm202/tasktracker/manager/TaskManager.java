@@ -6,13 +6,17 @@ import com.github.krfm202.tasktracker.model.Status;
 import com.github.krfm202.tasktracker.storage.FileManager;
 import com.github.krfm202.tasktracker.storage.JsonParser;
 
+import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
 
 
 public class TaskManager {
     private static List<Task> taskList;
     FileManager file;
     JsonParser parser;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
 
     public TaskManager() {
         file = new FileManager();
@@ -36,6 +40,35 @@ public class TaskManager {
             throw new CommandException("Insufficient args, try again");
         }
         return task.getId();
+    }
+
+    private final Function<Task, String> mapFormat = t ->
+            "ID: " + t.getId() +
+                    "\nDESCRIPTION: " + t.getDescription() +
+                    "\nSTATUS: " + t.getStatus().getDescription() +
+                    "\nUPDATED AT: " + t.getUpdatedAt().format(formatter) +
+                    "\nCREATED AT: " + t.getUpdatedAt().format(formatter)
+                    + "\n";
+
+    public List<String> list(List<String> args) {
+        List<String> taskList;
+        taskList = parser.parseJsonStringToList(file.read())
+                .stream()
+                .filter(t -> t.getStatus().getId() == findMatchingStatus(args.get(0)).getId())
+                .sorted(Comparator.comparingInt(Task::getId))
+                .map(mapFormat)
+                .toList();
+        return taskList;
+    }
+
+    public List<String> list() {
+        List<String> taskList;
+        taskList = parser.parseJsonStringToList(file.read())
+                .stream()
+                .sorted(Comparator.comparingInt(Task::getId))
+                .map(mapFormat)
+                .toList();
+        return taskList;
     }
 
     private Status findMatchingStatus(String sts) {

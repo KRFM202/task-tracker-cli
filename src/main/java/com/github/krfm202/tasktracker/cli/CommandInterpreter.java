@@ -30,7 +30,7 @@ public class CommandInterpreter {
         switch (command) {
             case "add" -> processor.processAdd(args);
             case "delete" -> processor.processDelete();
-            case "list" -> processor.processListAll();
+            case "list" -> processor.processList(args);
             case "exit" -> processor.processExit();
             default -> {
                 throw new CommandException("Unknown command: " + command);
