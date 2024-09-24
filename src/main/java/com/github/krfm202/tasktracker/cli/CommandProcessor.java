@@ -16,9 +16,10 @@ public class CommandProcessor {
         System.out.println("Task added successfully (ID: " + id + ")");
     }
 
-    public void processDelete() {
-        System.out.println();
-        System.out.println("comando ejecutado delete");
+    public void processDelete(List<String> args) {
+        int id = taskManager.delete(args);
+        if (id != -1) System.out.println("Task deleted succesfully (ID: " + id + ")");
+        else System.out.println("Task not deleted, try again");
     }
 
     public void processList(List<String> args) {

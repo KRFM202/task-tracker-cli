@@ -29,7 +29,7 @@ public class CommandInterpreter {
     public void findMatchingCommand(String command, CommandProcessor processor, List<String> args) {
         switch (command) {
             case "add" -> processor.processAdd(args);
-            case "delete" -> processor.processDelete();
+            case "delete" -> processor.processDelete(args);
             case "list" -> processor.processList(args);
             case "exit" -> processor.processExit();
             default -> throw new CommandException("Unknown command: " + command);

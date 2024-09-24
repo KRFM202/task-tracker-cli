@@ -8,6 +8,7 @@ import com.github.krfm202.tasktracker.storage.JsonParser;
 
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.function.Function;
 
@@ -39,6 +40,26 @@ public class TaskManager {
             throw new CommandException("Insufficient args, try again");
         }
         return task.getId();
+    }
+
+    public int delete(List<String> args) {
+        try {
+            if (!args.isEmpty()) {
+                List<Task> taskList = parser.parseJsonStringToList(file.read());
+                int id = Integer.parseInt(args.get(0));
+                Iterator<Task> taskIterator = taskList.iterator();
+                while (taskIterator.hasNext() && !taskList.isEmpty()) {
+                    if (id == taskIterator.next().getId()) {
+                        taskIterator.remove();
+                        file.write(parser.generateJsonString(taskList));
+                        return id;
+                    }
+                }
+            }
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("Error: " + e);
+        }
+        return -1;
     }
 
     private final Function<Task, String> mapFormat = t ->
