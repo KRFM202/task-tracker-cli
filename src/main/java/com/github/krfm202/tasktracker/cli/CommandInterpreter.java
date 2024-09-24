@@ -32,9 +32,7 @@ public class CommandInterpreter {
             case "delete" -> processor.processDelete();
             case "list" -> processor.processList(args);
             case "exit" -> processor.processExit();
-            default -> {
-                throw new CommandException("Unknown command: " + command);
-            }
+            default -> throw new CommandException("Unknown command: " + command);
         }
     }
 
