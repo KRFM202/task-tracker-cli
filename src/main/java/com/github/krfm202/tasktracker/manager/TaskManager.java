@@ -13,7 +13,6 @@ import java.util.function.Function;
 
 
 public class TaskManager {
-    private static List<Task> taskList;
     FileManager file;
     JsonParser parser;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
@@ -32,7 +31,7 @@ public class TaskManager {
             if (args.size() == 1) status = Status.TODO;
             else status = findMatchingStatus(args.get(1));
             task = new Task(description, status);
-            taskList = parser.parseJsonStringToList(file.read());
+            List<Task> taskList = parser.parseJsonStringToList(file.read());
             taskList.add(task);
             file.write(parser.generateJsonString(taskList));
         } else {
