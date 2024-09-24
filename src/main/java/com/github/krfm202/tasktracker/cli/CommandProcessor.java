@@ -18,8 +18,13 @@ public class CommandProcessor {
 
     public void processDelete(List<String> args) {
         int id = taskManager.delete(args);
-        if (id != -1) System.out.println("Task deleted succesfully (ID: " + id + ")");
+        if (id != -1) System.out.println("Task deleted successfully (ID: " + id + ")");
         else System.out.println("Task not deleted, try again");
+    }
+
+    public void processMark(List<String> args) {
+        if (taskManager.mark(args)) System.out.println("Task status successfully changed");
+        else System.out.println("Task status was not changed");
     }
 
     public void processList(List<String> args) {

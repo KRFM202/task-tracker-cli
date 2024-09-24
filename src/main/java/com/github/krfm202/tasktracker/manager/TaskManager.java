@@ -62,6 +62,24 @@ public class TaskManager {
         return -1;
     }
 
+    public boolean mark(List<String> args) {
+        List<Task> taskList = parser.parseJsonStringToList(file.read());
+        boolean markedOnList = taskList
+                .stream()
+                .filter(t -> Integer.parseInt(args.get(1)) == t.getId())
+                .findFirst()
+                .map(t -> {
+                    t.setStatus(findMatchingStatus(args.get(0)));
+                    return true;
+                })
+                .orElse(false);
+        if (markedOnList) {
+            file.write(parser.generateJsonString(taskList));
+            return true;
+        }
+        return false;
+    }
+
     private final Function<Task, String> mapFormat = t ->
             "ID: " + t.getId() +
                     "\nDESCRIPTION: " + t.getDescription() +
