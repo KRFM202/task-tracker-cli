@@ -32,6 +32,7 @@ It is a solution for the Task Tracker challenge from [roadmap.sh](https://roadma
   add "Buy groceries"
   ```
   - You can also add a task with a status:
+    
   ```bash
   add "Buy groceries" inprogress
   ```
