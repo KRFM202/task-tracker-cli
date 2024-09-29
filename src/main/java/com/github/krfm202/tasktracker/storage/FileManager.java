@@ -6,16 +6,19 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class FileManager {
-    private static final String PATH = "src/main/resources/task-data.json";
-    private static File dataFile;
+    private final File dataFile;
 
     public FileManager() {
-        dataFile = new File(PATH);
+        String userHome = System.getProperty("user.home");
+        String appDirectory = userHome + "/.task-tracker-data";
+        dataFile = new File(appDirectory, "task-data.json");
+        new File(appDirectory).mkdirs();
+        ensureFileExists();
     }
 
     private void ensureFileExists() {
         try {
-            dataFile.createNewFile();
+            if (!dataFile.exists()) dataFile.createNewFile();
         } catch (IOException e) {
             throw new RuntimeException("Error: " + e.getMessage());
         }
